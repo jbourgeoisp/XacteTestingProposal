@@ -7,7 +7,7 @@ namespace Xacte.Patient.Business.Test;
 public class PatientHospitalizationServiceTest
 {
 	private IPatientHospitalizationService _patientHospitalizationService;
-	private readonly string _zzzzPatientId = "1";
+	private const string ZzzzPatientId = "1";
 
 	private sealed class GetPatientHospitalizationInIntensiveCareDtoData : IEnumerable<object[]>
 	{
@@ -69,7 +69,7 @@ public class PatientHospitalizationServiceTest
 		// Arrange
 		GetPatientHospitalizationDto dto = new GetPatientHospitalizationDto
 		{
-			PatientId = _zzzzPatientId
+			PatientId = ZzzzPatientId
 		};
 
 		// Act
