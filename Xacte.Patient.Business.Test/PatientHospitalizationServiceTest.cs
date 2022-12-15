@@ -1,6 +1,5 @@
 using System.Collections;
 using FluentAssertions;
-using Xacte.Common.TestExtension;
 using Xacte.Patient.Dto;
 
 namespace Xacte.Patient.Business.Test;
@@ -14,44 +13,47 @@ public class PatientHospitalizationServiceTest
 	private const string IntensiveCareLocationNo2 = "6001";
 	private const string IntensiveCareLocationNo3 = "6002";
 
-private sealed class GetPatientHospitalizationInIntensiveCareDtoData : IEnumerable<object[]>
-{
-	public IEnumerator<object[]> GetEnumerator()
+	private sealed class GetPatientHospitalizationInIntensiveCareDtoData : IEnumerable<object[]>
 	{
-		yield return new object[]
+		public IEnumerator<object[]> GetEnumerator()
 		{
-			new GetPatientHospitalizationDto
+			yield return new object[]
 			{
-				PatientId = Guid.NewGuid().ToString(),
-				FromDate = GetRandomDateStringInLast90Days(),
-				LocationNo = IntensiveCareLocationNo1,
-				ProfileId = Guid.NewGuid().ToString()
-			}
-		};
-		yield return new object[]
-		{
-			new GetPatientHospitalizationDto
+				new GetPatientHospitalizationDto
+				{
+					PatientId = Guid.NewGuid().ToString(),
+					FromDate = GetRandomDateStringInLast90Days(),
+					LocationNo = IntensiveCareLocationNo1,
+					ProfileId = Guid.NewGuid().ToString()
+				}
+			};
+			yield return new object[]
 			{
-				PatientId = Guid.NewGuid().ToString(),
-				FromDate = GetRandomDateStringInLast90Days(),
-				LocationNo = IntensiveCareLocationNo2,
-				ProfileId = Guid.NewGuid().ToString()
-			}
-		};
-		yield return new object[]
-		{
-			new GetPatientHospitalizationDto
+				new GetPatientHospitalizationDto
+				{
+					PatientId = Guid.NewGuid().ToString(),
+					FromDate = GetRandomDateStringInLast90Days(),
+					LocationNo = IntensiveCareLocationNo2,
+					ProfileId = Guid.NewGuid().ToString()
+				}
+			};
+			yield return new object[]
 			{
-				PatientId = Guid.NewGuid().ToString(),
-				FromDate = GetRandomDateStringInLast90Days(),
-				LocationNo = IntensiveCareLocationNo3,
-				ProfileId = Guid.NewGuid().ToString()
-			}
-		};
-	}
+				new GetPatientHospitalizationDto
+				{
+					PatientId = Guid.NewGuid().ToString(),
+					FromDate = GetRandomDateStringInLast90Days(),
+					LocationNo = IntensiveCareLocationNo3,
+					ProfileId = Guid.NewGuid().ToString()
+				}
+			};
+		}
 
-	IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-}
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
+		}
+	}
 
 	#endregion
 
@@ -59,14 +61,14 @@ private sealed class GetPatientHospitalizationInIntensiveCareDtoData : IEnumerab
 	public void GivenAGetPatientHospitalizationDto_WhenPatientIsNAMSystem_ThenDateHospitalizationReturnedIsNull()
 	{
 		// Arrange
-		PatientHospitalizationService service = CreateDefaultPatientHospitalizationService();
+		var service = CreateDefaultPatientHospitalizationService();
 		GetPatientHospitalizationDto dto = new()
 		{
 			PatientId = ZzzzPatientId
 		};
 
 		// Act
-		GetPatientHospitalizationResponseObject responseObject = service.GetPatientHospitalization(dto);
+		var responseObject = service.GetPatientHospitalization(dto);
 
 		// Assert
 		responseObject.HospitalizationDate.Should().BeNull();
@@ -74,13 +76,14 @@ private sealed class GetPatientHospitalizationInIntensiveCareDtoData : IEnumerab
 
 	[Theory]
 	[ClassData(typeof(GetPatientHospitalizationInIntensiveCareDtoData))]
-	public void GivenListOfPatients_WhenPatientsAreInIntensiveCareLocation_ThenHospitalizationDateIsReturned(GetPatientHospitalizationDto dto)
+	public void GivenListOfPatients_WhenPatientsAreInIntensiveCareLocation_ThenHospitalizationDateIsReturned(
+		GetPatientHospitalizationDto dto)
 	{
 		// Arrange
-		PatientHospitalizationService service = CreateDefaultPatientHospitalizationService();
+		var service = CreateDefaultPatientHospitalizationService();
 
 		// Act
-		GetPatientHospitalizationResponseObject responseObject = service.GetPatientHospitalization(dto);
+		var responseObject = service.GetPatientHospitalization(dto);
 
 		// Assert
 		responseObject.HospitalizationDate.Should().NotBeNull();
