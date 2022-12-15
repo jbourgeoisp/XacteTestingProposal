@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Xacte.Common.RAMQ\Xacte.Common.RAMQ.csproj" />
+    <ProjectReference Include="..\Xacte.Patient.Data\Xacte.Patient.Data.csproj" />
+    <ProjectReference Include="..\Xacte.Patient.Dto\Xacte.Patient.Dto.csproj" />
+    <ProjectReference Include="..\Xacte.System.Api\Xacte.System.Api.csproj" />
+  </ItemGroup>
+
+</Project>
