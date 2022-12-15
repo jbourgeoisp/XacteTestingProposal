@@ -15,10 +15,11 @@ public class PatientHospitalizationControllerTest
 		// Arrange
 		Type expected = typeof(NotFoundResult);
 		GetPatientHospitalizationDto getPatientHospitalizationDto = null;
-		Mock<IPatientHospitalizationService> mockPatientHospitalizationService = new Mock<IPatientHospitalizationService>();
+		Mock<IPatientHospitalizationService> mockPatientHospitalizationService =
+			CreateMockPatientHospitalizationService();
 		mockPatientHospitalizationService.Setup(x => 
 			x.GetPatientHospitalization(getPatientHospitalizationDto)).Returns<GetPatientHospitalizationResponseObject>(null);
-		PatientHospitalizationController patientHospitalizationController = new PatientHospitalizationController(mockPatientHospitalizationService.Object);
+		PatientHospitalizationController patientHospitalizationController = CreateDefaultPatientHospitalizationController(mockPatientHospitalizationService.Object);
 
 		// Act
 		IActionResult result = patientHospitalizationController.GetHospitalization(new GetPatientHospitalizationDto());
@@ -26,4 +27,19 @@ public class PatientHospitalizationControllerTest
 		// Assert
 		result.GetType().Should().Be(expected);
 	}
+
+	#region Setup
+
+	private static Mock<IPatientHospitalizationService> CreateMockPatientHospitalizationService()
+	{
+		return new Mock<IPatientHospitalizationService>();
+	}
+
+	private static PatientHospitalizationController CreateDefaultPatientHospitalizationController(
+		IPatientHospitalizationService patientHospitalizationService)
+	{
+		return new PatientHospitalizationController(patientHospitalizationService);
+	}
+
+	#endregion
 }

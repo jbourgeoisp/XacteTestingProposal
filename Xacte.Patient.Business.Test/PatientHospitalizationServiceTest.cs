@@ -6,6 +6,8 @@ namespace Xacte.Patient.Business.Test;
 
 public class PatientHospitalizationServiceTest
 {
+	#region Properties
+
 	private const string ZzzzPatientId = "1";
 	private const string IntensiveCareLocationNo1 = "6000";
 	private const string IntensiveCareLocationNo2 = "6001";
@@ -50,6 +52,8 @@ public class PatientHospitalizationServiceTest
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 	}
 
+	#endregion
+
 	[Fact]
 	public void GivenAGetPatientHospitalizationDto_WhenPatientIsNAMSystem_ThenDateHospitalizationReturnedIsNull()
 	{
@@ -81,6 +85,8 @@ public class PatientHospitalizationServiceTest
 		responseObject.HospitalizationDate.Should().NotBeNull();
 	}
 
+	#region Setup
+
 	private static PatientHospitalizationService CreateDefaultPatientHospitalizationService()
 	{
 		return new PatientHospitalizationService();
@@ -90,4 +96,6 @@ public class PatientHospitalizationServiceTest
 	{
 		return DateTime.UtcNow.AddDays(new Random().Next(90) * -1).ToString("yyyy-MM-dd");
 	}
+
+	#endregion
 }
