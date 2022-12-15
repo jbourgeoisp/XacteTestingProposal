@@ -17,8 +17,8 @@ public class PatientHospitalizationControllerTest
 		GetPatientHospitalizationDto getPatientHospitalizationDto = null;
 		Mock<IPatientHospitalizationService> mockPatientHospitalizationService =
 			CreateMockPatientHospitalizationService();
-		mockPatientHospitalizationService.Setup(x => 
-			x.GetPatientHospitalization(getPatientHospitalizationDto)).Returns<GetPatientHospitalizationResponseObject>(null);
+	mockPatientHospitalizationService.Setup(x => 
+		x.GetPatientHospitalization(getPatientHospitalizationDto)).Returns<GetPatientHospitalizationResponseObject>(null);
 		PatientHospitalizationController patientHospitalizationController = CreateDefaultPatientHospitalizationController(mockPatientHospitalizationService.Object);
 
 		// Act

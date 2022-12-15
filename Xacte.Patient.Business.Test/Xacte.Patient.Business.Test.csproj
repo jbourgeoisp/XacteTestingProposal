@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Xacte.Common.TestExtension\Xacte.Common.TestExtension.csproj" />
     <ProjectReference Include="..\Xacte.Patient.Business\Xacte.Patient.Business.csproj" />
     <ProjectReference Include="..\Xacte.Patient.Dto\Xacte.Patient.Dto.csproj" />
   </ItemGroup>

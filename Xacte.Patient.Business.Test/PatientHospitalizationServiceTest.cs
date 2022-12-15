@@ -1,5 +1,6 @@
 using System.Collections;
 using FluentAssertions;
+using Xacte.Common.TestExtension;
 using Xacte.Patient.Dto;
 
 namespace Xacte.Patient.Business.Test;
@@ -13,44 +14,44 @@ public class PatientHospitalizationServiceTest
 	private const string IntensiveCareLocationNo2 = "6001";
 	private const string IntensiveCareLocationNo3 = "6002";
 
-	private sealed class GetPatientHospitalizationInIntensiveCareDtoData : IEnumerable<object[]>
+private sealed class GetPatientHospitalizationInIntensiveCareDtoData : IEnumerable<object[]>
+{
+	public IEnumerator<object[]> GetEnumerator()
 	{
-		public IEnumerator<object[]> GetEnumerator()
+		yield return new object[]
 		{
-			yield return new object[]
+			new GetPatientHospitalizationDto
 			{
-				new GetPatientHospitalizationDto
-				{
-					PatientId = Guid.NewGuid().ToString(),
-					FromDate = GetRandomDateStringInLast90Days(),
-					LocationNo = IntensiveCareLocationNo1,
-					ProfileId = Guid.NewGuid().ToString()
-				}
-			};
-			yield return new object[]
+				PatientId = Guid.NewGuid().ToString(),
+				FromDate = GetRandomDateStringInLast90Days(),
+				LocationNo = IntensiveCareLocationNo1,
+				ProfileId = Guid.NewGuid().ToString()
+			}
+		};
+		yield return new object[]
+		{
+			new GetPatientHospitalizationDto
 			{
-				new GetPatientHospitalizationDto
-				{
-					PatientId = Guid.NewGuid().ToString(),
-					FromDate = GetRandomDateStringInLast90Days(),
-					LocationNo = IntensiveCareLocationNo2,
-					ProfileId = Guid.NewGuid().ToString()
-				}
-			};
-			yield return new object[]
+				PatientId = Guid.NewGuid().ToString(),
+				FromDate = GetRandomDateStringInLast90Days(),
+				LocationNo = IntensiveCareLocationNo2,
+				ProfileId = Guid.NewGuid().ToString()
+			}
+		};
+		yield return new object[]
+		{
+			new GetPatientHospitalizationDto
 			{
-				new GetPatientHospitalizationDto
-				{
-					PatientId = Guid.NewGuid().ToString(),
-					FromDate = GetRandomDateStringInLast90Days(),
-					LocationNo = IntensiveCareLocationNo3,
-					ProfileId = Guid.NewGuid().ToString()
-				}
-			};
-		}
-
-		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+				PatientId = Guid.NewGuid().ToString(),
+				FromDate = GetRandomDateStringInLast90Days(),
+				LocationNo = IntensiveCareLocationNo3,
+				ProfileId = Guid.NewGuid().ToString()
+			}
+		};
 	}
+
+	IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+}
 
 	#endregion
 
