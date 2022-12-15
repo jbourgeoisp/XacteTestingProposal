@@ -10,4 +10,8 @@
     <PackageReference Include="FluentAssertions" Version="6.8.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Xacte.Common.RAMQ\Xacte.Common.RAMQ.csproj" />
+  </ItemGroup>
+
 </Project>

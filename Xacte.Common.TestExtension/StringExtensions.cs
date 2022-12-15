@@ -1,17 +1,12 @@
 ﻿using FluentAssertions;
 using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
+using Xacte.Common.RAMQ;
 
 namespace Xacte.Common.TestExtension;
 
 public static class StringAssertionExtensions
 {
-	private static string[] _systemNumeroAssuranceMaladie =
-	{
-		"ZZZZ01010112",
-		"XXXX01010112"
-	};
-
 	public static AndConstraint<StringAssertions> BeSystemNumeroAssuranceMaladie(
 		this StringAssertions parent,
 		string because = "",
@@ -20,7 +15,7 @@ public static class StringAssertionExtensions
 		Execute.Assertion
 			.BecauseOf(because, becauseArgs)
 			.Given(() => parent.Subject)
-			.ForCondition(s => _systemNumeroAssuranceMaladie.Contains(s))
+			.ForCondition(NumeroAssuranceMaladie.IsSystemNAM)
 			.FailWith($"Expected any system NAM, but found '{parent.Subject}'");
 
 		return new AndConstraint<StringAssertions>(parent);
