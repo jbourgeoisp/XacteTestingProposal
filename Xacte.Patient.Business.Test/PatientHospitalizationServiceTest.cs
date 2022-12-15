@@ -6,8 +6,10 @@ namespace Xacte.Patient.Business.Test;
 
 public class PatientHospitalizationServiceTest
 {
-	private IPatientHospitalizationService _patientHospitalizationService;
 	private const string ZzzzPatientId = "1";
+	private const string IntensiveCareLocationNo1 = "6000";
+	private const string IntensiveCareLocationNo2 = "6001";
+	private const string IntensiveCareLocationNo3 = "6002";
 
 	private sealed class GetPatientHospitalizationInIntensiveCareDtoData : IEnumerable<object[]>
 	{
@@ -19,7 +21,7 @@ public class PatientHospitalizationServiceTest
 				{
 					PatientId = Guid.NewGuid().ToString(),
 					FromDate = GetRandomDateStringInLast90Days(),
-					LocationNo = "6000",
+					LocationNo = IntensiveCareLocationNo1,
 					ProfileId = Guid.NewGuid().ToString()
 				}
 			};
@@ -29,7 +31,7 @@ public class PatientHospitalizationServiceTest
 				{
 					PatientId = Guid.NewGuid().ToString(),
 					FromDate = GetRandomDateStringInLast90Days(),
-					LocationNo = "6032",
+					LocationNo = IntensiveCareLocationNo2,
 					ProfileId = Guid.NewGuid().ToString()
 				}
 			};
@@ -39,17 +41,7 @@ public class PatientHospitalizationServiceTest
 				{
 					PatientId = Guid.NewGuid().ToString(),
 					FromDate = GetRandomDateStringInLast90Days(),
-					LocationNo = "6033",
-					ProfileId = Guid.NewGuid().ToString()
-				}
-			};
-			yield return new object[]
-			{
-				new GetPatientHospitalizationDto
-				{
-					PatientId = Guid.NewGuid().ToString(),
-					FromDate = GetRandomDateStringInLast90Days(),
-					LocationNo = "6999",
+					LocationNo = IntensiveCareLocationNo3,
 					ProfileId = Guid.NewGuid().ToString()
 				}
 			};
@@ -58,23 +50,18 @@ public class PatientHospitalizationServiceTest
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 	}
 
-	public PatientHospitalizationServiceTest()
-	{
-		_patientHospitalizationService = new PatientHospitalizationService();
-	}
-
 	[Fact]
 	public void GivenAGetPatientHospitalizationDto_WhenPatientIsNAMSystem_ThenDateHospitalizationReturnedIsNull()
 	{
 		// Arrange
-		GetPatientHospitalizationDto dto = new GetPatientHospitalizationDto
+		PatientHospitalizationService service = CreateDefaultPatientHospitalizationService();
+		GetPatientHospitalizationDto dto = new()
 		{
 			PatientId = ZzzzPatientId
 		};
 
 		// Act
-		GetPatientHospitalizationResponseObject responseObject =
-			_patientHospitalizationService.GetPatientHospitalization(dto);
+		GetPatientHospitalizationResponseObject responseObject = service.GetPatientHospitalization(dto);
 
 		// Assert
 		responseObject.HospitalizationDate.Should().BeNull();
@@ -84,12 +71,19 @@ public class PatientHospitalizationServiceTest
 	[ClassData(typeof(GetPatientHospitalizationInIntensiveCareDtoData))]
 	public void GivenListOfPatients_WhenPatientsAreInIntensiveCareLocation_ThenHospitalizationDateIsReturned(GetPatientHospitalizationDto dto)
 	{
+		// Arrange
+		PatientHospitalizationService service = CreateDefaultPatientHospitalizationService();
+
 		// Act
-		GetPatientHospitalizationResponseObject responseObject =
-			_patientHospitalizationService.GetPatientHospitalization(dto);
+		GetPatientHospitalizationResponseObject responseObject = service.GetPatientHospitalization(dto);
 
 		// Assert
 		responseObject.HospitalizationDate.Should().NotBeNull();
+	}
+
+	private static PatientHospitalizationService CreateDefaultPatientHospitalizationService()
+	{
+		return new PatientHospitalizationService();
 	}
 
 	private static string GetRandomDateStringInLast90Days()
