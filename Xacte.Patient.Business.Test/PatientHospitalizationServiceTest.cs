@@ -92,6 +92,10 @@ public class PatientHospitalizationServiceTest
 		return new PatientHospitalizationService();
 	}
 
+	#endregion
+
+	#region Private Methods
+
 	private static string GetRandomDateStringInLast90Days()
 	{
 		return DateTime.UtcNow.AddDays(new Random().Next(90) * -1).ToString("yyyy-MM-dd");
